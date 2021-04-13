@@ -4,5 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+pygame = "*"
 
 [dev-packages]
+
+[scripts]
+start = "python -m quick_sort"
