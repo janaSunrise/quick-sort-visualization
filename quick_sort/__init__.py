@@ -63,8 +63,8 @@ class Quicksort:
                 self.COLOR_MAP[idx] = Colors.WHITE
 
             # Positions mapping
-            # Start of the line is the TOP section, Get the index and gap multiplication, and add a gap of 5
-            x_axis = idx * GAP + 5
+            # Start of the line is the TOP section, Get the index and gap multiplication, and add a gap of 10
+            x_axis = idx * GAP + 10
 
             # End of the line is the current element value sub from the total height
             y_axis = SCREEN_HEIGHT - elem
