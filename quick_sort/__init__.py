@@ -34,10 +34,10 @@ class Quicksort:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        self.ARRAY = ARRAY.copy()
                         self.quicksort(self.ARRAY)
+                        self.ARRAY = ARRAY.copy()
 
-                    if event.key == pygame.K_r:
+                    elif event.key == pygame.K_r:
                         self.ARRAY = generate_random_values(self.VALUE_COUNT, (5, 75))
                         self.quicksort(self.ARRAY)
 
@@ -54,9 +54,9 @@ class Quicksort:
     def draw_lines(self):
         self.window.fill(Colors.BLACK)
 
-        self.ARRAY = scale_list(self.ARRAY, (1, SCREEN_HEIGHT))
+        array = scale_list(self.ARRAY, (1, SCREEN_HEIGHT))
 
-        for idx, elem in enumerate(self.ARRAY):
+        for idx, elem in enumerate(array):
             elem = round(elem)
 
             if idx not in self.COLOR_MAP:
@@ -76,16 +76,38 @@ class Quicksort:
 
     def partition(self, array: list, low: int, high: int):
         pivot = low
+        self.COLOR_MAP[pivot] = Colors.TURQUOISE
 
         for i in range(low + 1, high + 1):
+            self.COLOR_MAP[i] = Colors.RED
+            self.update_screen()
+
+            self.COLOR_MAP[i] = Colors.WHITE
+
             if array[i] <= array[low]:
                 pivot += 1
+
+                self.COLOR_MAP[pivot] = Colors.RED
                 array[i], array[pivot] = array[pivot], array[i]
 
+        self.update_screen()
+
+        self.COLOR_MAP[pivot] = Colors.WHITE
         array[pivot], array[low] = array[low], array[pivot]
+
+        self.update_screen()
+        self.COLOR_MAP[pivot] = Colors.GREEN
+
         return pivot
 
     def quicksort(self, array: list):
+        """
+        Color Coding Syntax:
+
+        - TURQUOISE: Pivot bar
+        - Green: Sorted bar
+        - White: Unsorted bar
+        """
         low, high = 0, len(array) - 1
 
         def _quicksort(array, low, high):
@@ -95,6 +117,11 @@ class Quicksort:
             pivot = self.partition(array, low, high)
 
             _quicksort(array, low, pivot - 1)
+
+            self.update_screen()
+            for i in range(0, pivot + 1):
+                self.COLOR_MAP[i] = Colors.GREEN
+
             _quicksort(array, pivot + 1, high)
 
         return _quicksort(array, low, high)
