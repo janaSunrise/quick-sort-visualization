@@ -11,8 +11,21 @@ Here's a Demo on how it works
 
 ## How to run it?
 
-The project uses pipenv for dependencies. You can install the dependencies by using `pipenv sync -d`. Then start the
-app using `pipenv run start`.
+The project uses pipenv for dependencies.
+
+### Install
+
+To install the dependencies for the project, use this command
+
+```sh
+pipenv sync -d
+```
+
+### Usage
+
+```sh
+pipenv run start
+```
 
 Here are the controls!
 
@@ -29,6 +42,11 @@ Here are the controls!
 
 You can modify the default list, by changing the value of the variable `ARRAY` in `__init__.py`
 And use the following controls as written above to visualize it's sorting.
+
+## Show your support
+
+We love people's support in growing and improving. Be sure to leave a ⭐️ if you like the project and 
+also be sure to contribute, if you're interested!
 
 <div align="center">
 Made by janaSunrise with ❤
