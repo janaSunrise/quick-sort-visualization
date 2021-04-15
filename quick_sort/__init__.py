@@ -31,3 +31,70 @@ class Quicksort:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.ARRAY = ARRAY.copy()
+                        self.quicksort(self.ARRAY)
+
+                    if event.key == pygame.K_r:
+                        self.ARRAY = generate_random_values(self.VALUE_COUNT, (5, 75))
+                        self.quicksort(self.ARRAY)
+
+    def update_screen(self) -> None:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        self.draw_lines()
+        pygame.display.update()
+        self.clock.tick(self.TICKS)
+
+    def draw_lines(self):
+        self.window.fill(Colors.BLACK)
+
+        self.ARRAY = scale_list(self.ARRAY, (1, SCREEN_HEIGHT))
+
+        for idx, elem in enumerate(self.ARRAY):
+            elem = round(elem)
+
+            if idx not in self.COLOR_MAP:
+                self.COLOR_MAP[idx] = Colors.WHITE
+
+            # Positions mapping
+            # Start of the line is the TOP section, Get the index and gap multiplication, and add a gap of 5
+            x_axis = idx * GAP + 5
+
+            # End of the line is the current element value sub from the total height
+            y_axis = SCREEN_HEIGHT - elem
+
+            position_1 = (x_axis, SCREEN_HEIGHT)
+            position_2 = (x_axis, y_axis)
+
+            pygame.draw.line(self.window, self.COLOR_MAP[idx], position_1, position_2)
+
+    def partition(self, array: list, low: int, high: int):
+        pivot = low
+
+        for i in range(low + 1, high + 1):
+            if array[i] <= array[low]:
+                pivot += 1
+                array[i], array[pivot] = array[pivot], array[i]
+
+        array[pivot], array[low] = array[low], array[pivot]
+        return pivot
+
+    def quicksort(self, array: list):
+        low, high = 0, len(array) - 1
+
+        def _quicksort(array, low, high):
+            if low >= high:
+                return
+
+            pivot = self.partition(array, low, high)
+
+            _quicksort(array, low, pivot - 1)
+            _quicksort(array, pivot + 1, high)
+
+        return _quicksort(array, low, high)
