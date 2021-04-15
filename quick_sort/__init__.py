@@ -87,7 +87,7 @@ class Quicksort:
             if array[i] <= array[low]:
                 pivot += 1
 
-                self.COLOR_MAP[pivot] = Colors.RED
+                self.COLOR_MAP[pivot] = Colors.TURQUOISE
                 array[i], array[pivot] = array[pivot], array[i]
 
         self.update_screen()
